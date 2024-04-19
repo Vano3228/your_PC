@@ -1,4 +1,17 @@
 * {
   padding: 0;
   margin: 0;
+  font-family: Alice;
+  text-decoration: none;
+}
+
+.App {
+  background-color: #FDF0DF;
+}
+
+@font-face {
+  font-family: "Alice";
+  src: url("./fonts/Alice-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
 }

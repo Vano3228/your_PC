@@ -1,0 +1,39 @@
+.header{
+    height: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px 10px 30px;
+    box-sizing: border-box;
+    background-color: #D9C9BA;
+
+    a,
+    .logo {
+        height: 100%;
+    }
+
+    .buttons {
+        display: flex;
+        gap: 10px;
+        button {
+            padding: 8px;
+            border-radius: 10px;
+            border: 0;
+            background-color: #7EEB90;
+            color: darkslategrey;
+            cursor: pointer;
+            font-size: 32px;
+            user-select: none;
+            box-shadow: grey 2px 2px;
+        }
+
+        button:hover {
+            background-color: #79E38B;
+        }
+
+        button:active {
+            background-color: #60E080;
+        }
+    }
+}
