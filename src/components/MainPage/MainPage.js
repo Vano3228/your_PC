@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import axios from "axios";
 import './MainPage.scss'
 import ItemPC from "./ItemPC/ItemPC";
+import ComponentItem from "../ComponentItem/ComponentItem";
 
 function PCList({type}) {
     const [list, setList] = useState()
@@ -28,12 +29,20 @@ function MainPage() {
             <div className="content">
                 <div className="pc-list-box all">
                     <h3>Все конфигурации</h3>
-                    <PCList type={'all'}/>
+                    {/*<PCList type={'all'}/>*/}
                 </div>
                 <div className="pc-list-box recommended">
                     <h3>Рекоммендованные конфигурации</h3>
-                    <PCList type={'recommended'}/>
+                    {/*<PCList type={'recommended'}/>*/}
                 </div>
+                <ComponentItem component={{
+                    name: "Intel Core i3-10100F",
+                    characteristics: "4 ядра 8 потоков, вся хуйня",
+                    shop: "DNS",
+                    url: "https://www.dns-shop.ru/product/858de36402573330/480-gb-ssd-nakopitel-kingston-a400-sa400s37480g/opinion/",
+                    price: "4999"
+
+                }}/>
             </div>
         </div>
     )
