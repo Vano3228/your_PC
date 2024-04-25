@@ -1,5 +1,25 @@
 .profile-page {
   padding: 20px;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
   justify-content: center;
+
+  h2 {
+    border-bottom: 2px gray solid;
+    width: 125px;
+    text-align: center;
+  }
+
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    p {
+      font-size: 20px;
+    }
+
+  }
 }

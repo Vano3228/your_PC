@@ -10,42 +10,6 @@
     justify-content: space-evenly;
     gap: 100px;
     padding: 20px;
-
-    .pc-list-box {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      box-sizing: border-box;
-      overflow: auto;
-      max-height: 500px;
-      width: 500px;
-      border-radius: 10px;
-      border: 2px grey dashed;
-      padding: 10px;
-
-      h3{
-        font-size: 24px;
-        text-align: center;
-        border-bottom: 2px grey solid;
-        padding-bottom: 10px;
-      }
-
-      .pc-list {
-        display: flex;
-        gap: 10px;
-        flex-direction: column;
-        align-items: center;
-      }
-    }
-    .pc-list-box::-webkit-scrollbar {
-      width: 0;
-    }
-    .pc-list-box.all{
-      background-color: #D0F9E4;
-    }
-    .pc-list-box.recommended {
-      background-color: #60E080;
-    }
   }
 
 }

@@ -4,6 +4,8 @@ function ItemPC({el}) {
     return (
         <div className="item-pc">
             <h1>Компьютер {el.id}</h1>
+            <h2>{el.title}</h2>
+            <h2>{el.description}</h2>
             <p>Процессор {el.cpu_id }</p>
             <p>Видеокарта {el.gpu_id }</p>
             <p>Матринская плата {el.motherboard_id }</p>

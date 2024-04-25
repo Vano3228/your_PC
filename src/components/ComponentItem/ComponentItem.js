@@ -1,5 +1,5 @@
 import './ComponentItem.scss'
-function ComponentItem({component}){
+function ComponentItem({component, setSelectComponent, componentType}){
     return(
         <div className="component-item">
             <h3>{component.name}</h3>
@@ -9,6 +9,7 @@ function ComponentItem({component}){
                 Ссылка на товар
             </a>
             <p className={'price'}>{component.price}</p>
+            {setSelectComponent && <button onClick={setSelectComponent}> Выбрать </button>}
         </div>
     )
 }
