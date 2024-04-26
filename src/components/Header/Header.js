@@ -3,7 +3,7 @@ import './Header.scss'
 import logo from "../../images/yourPC_logo.png"
 import Modal from "./Modal/Modal";
 import {UserContext} from "../../App"
-import {Navigate, NavLink} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 function Header() {
     const [registerModal, setRegisterModal] = useState(false)
     const [loginModal, setLoginModal] = useState(false)

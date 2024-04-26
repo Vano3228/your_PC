@@ -10,21 +10,20 @@ function ListPC({type, userID}) {
         all: 'Все конфигурации'
     }
     const [list, setList] = useState([])
-    // useEffect(()=>{
-    //     async function fetchData() {
-    //         let src = ''
-    //         if (type === 'user'){
-    //             src = `http://localhost:5000/api/computers/${type}/${userID}`
-    //         }
-    //         else {
-    //             src = `http://localhost:5000/api/computers/${type}`
-    //         }
-    //         console.log(src)
-    //         const resp = await axios.get(src)
-    //         setList(resp.data)
-    //     }
-    //     fetchData()
-    // }, [setList]);
+    useEffect(()=>{
+        async function fetchData() {
+            let src = ''
+            if (type === 'user'){
+                src = `http://localhost:5000/api/computers/${type}/${userID}`
+            }
+            else {
+                src = `http://localhost:5000/api/computers/${type}`
+            }
+            const resp = await axios.get(src)
+            setList(resp.data)
+        }
+        fetchData()
+    }, [setList]);
     return(
         <div className={`pc-list-box ${type}`}>
             <h3>{titles[type]}</h3>

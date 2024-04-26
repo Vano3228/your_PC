@@ -1,31 +1,61 @@
 import React, { useState, useContext } from 'react';
 import {UserContext} from "../../../App"
 import './Modal.scss';
+import axios from "axios";
+axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 const Modal = ({ isOpen, onClose, mode }) => {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
     const {setCurrentUser} = useContext(UserContext);
+    const [fail, setFail] = useState(false)
+    const [alreadyCreate, setAlreadyCreate] = useState(false)
     const loginCurrentUser = () => {
         const user = {
             login,
             role: 'user'
         };
-        // Сохраняем информацию о пользователе в localStorage
+        if (login === 'admin') {
+            user.role = 'admin'
+        }
         localStorage.setItem('currentUser', JSON.stringify(user));
         setCurrentUser(user);
+        setLogin('')
+        setPassword('')
+        setAlreadyCreate(false)
+        setFail(false)
         onClose();
     }
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        loginCurrentUser()
+        const resp = await axios.post('http://localhost:5000/api/loginUser', {
+                login,
+                password
+        })
+        if (resp.data === 'success') {
+            setFail(false)
+            loginCurrentUser()
+        }
+        else {
+            setFail(true)
+        }
 
     };
 
-    const handleRegister = (e) => {
+    const handleRegister = async (e) => {
         e.preventDefault();
-        loginCurrentUser()
+        const resp = await axios.post('http://localhost:5000/api/users', {
+            login,
+            password
+        })
+        if (resp.data === 'alreadyCreate') {
+            setAlreadyCreate(true)
+        }
+        else {
+            console.log(resp)
+            loginCurrentUser()
+        }
     };
 
 
@@ -57,6 +87,8 @@ const Modal = ({ isOpen, onClose, mode }) => {
                                     required
                                 />
                             </div>
+                            {fail && <p style={{color:"red", marginBottom:"5px"}}>Неправильный логин или пароль</p>}
+                            {alreadyCreate && <p style={{color:"red", marginBottom:"10px", textAlign: "center"}}>Пользователь с таким логином уже существует</p>}
                             <button type="submit">{(mode === 'login') ? "Войти" : "Зарегистрироваться"}</button>
                         </form>
                     </div>
