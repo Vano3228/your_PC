@@ -10,16 +10,9 @@ const Modal = ({ isOpen, onClose, mode }) => {
     const {setCurrentUser} = useContext(UserContext);
     const [fail, setFail] = useState(false)
     const [alreadyCreate, setAlreadyCreate] = useState(false)
-    const loginCurrentUser = () => {
-        const user = {
-            login,
-            role: 'user'
-        };
-        if (login === 'admin') {
-            user.role = 'admin'
-        }
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        setCurrentUser(user);
+    const loginCurrentUser = (userObj) => {
+        localStorage.setItem('currentUser', JSON.stringify(userObj));
+        setCurrentUser(userObj);
         setLogin('')
         setPassword('')
         setAlreadyCreate(false)
@@ -33,12 +26,12 @@ const Modal = ({ isOpen, onClose, mode }) => {
                 login,
                 password
         })
-        if (resp.data === 'success') {
-            setFail(false)
-            loginCurrentUser()
+        if (resp.data === 'fail') {
+            setFail(true)
         }
         else {
-            setFail(true)
+            setFail(false)
+            loginCurrentUser(resp.data)
         }
 
     };

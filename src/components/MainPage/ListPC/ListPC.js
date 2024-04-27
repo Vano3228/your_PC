@@ -1,9 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useContext} from "react";
 import axios from "axios";
 import ItemPC from "./ItemPC/ItemPC";
 import './ListPC.scss'
+import {UserContext} from "../../../App";
 
-function ListPC({type, userID}) {
+function ListPC({type}) {
+    const {currentUser} = useContext(UserContext)
     const titles = {
         user: 'Ваши конфигурации',
         recommended: 'Рекомендованные конфигурации',
@@ -14,7 +16,7 @@ function ListPC({type, userID}) {
         async function fetchData() {
             let src = ''
             if (type === 'user'){
-                src = `http://localhost:5000/api/computers/${type}/${userID}`
+                src = `http://localhost:5000/api/computers/user/${currentUser.user_id}`
             }
             else {
                 src = `http://localhost:5000/api/computers/${type}`

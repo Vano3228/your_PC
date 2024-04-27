@@ -17,6 +17,8 @@
         display: flex;
         gap: 10px;
         button {
+            white-space: nowrap;
+            min-width: fit-content;
             padding: 8px;
             border-radius: 10px;
             border: 0;
