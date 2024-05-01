@@ -6,4 +6,14 @@
   gap: 5px;
   background-color: #F0FFDE;
   border-radius: 10px;
+
+  cursor: pointer;
+
+  &:hover {
+    background-color: #E0EFCE;
+  }
+
+  &:active {
+    background-color: #D0DFBE;
+  }
 }

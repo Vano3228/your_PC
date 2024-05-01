@@ -11,17 +11,28 @@
         background-color: #F0FFDE;
         padding: 20px;
         border-radius: 10px;
-        width: 35%;
+        width: 40%;
         border: 2px dotted grey;
+        max-height: 80vh;
+        overflow: auto;
 
         label {
             display: flex;
             justify-content: space-between;
+            align-items: center;
+
+            >p {
+                width: 35%;
+                font-size: 20px;
+            }
 
             select,
-            input {
+            input
+            {
                 height: 20px;
-                width: 50%;
+                width: 60%;
+                font-size: 18px;
+                min-height: 30px;
                 box-sizing: border-box;
                 margin-left: 10px;
                 text-align: center;
@@ -42,12 +53,13 @@
         button {
             width: fit-content;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 22px;
             background-color: #B0D9C4;
             color: darkslategrey;
             border: 1px solid grey;
-            padding: 4px;
+            padding: 5px;
             border-radius: 4px;
+
         }
 
         button:hover {
@@ -56,7 +68,6 @@
 
         button:active {
             background-color: #97BFA9;
-            color: rgba(0,0,0,0.4);
         }
     }
 }

@@ -4,4 +4,8 @@
   padding: 10px;
   box-sizing: border-box;
   border-radius: 5px;
+  overflow: auto;
+  h2 {
+    white-space: normal !important;
+  }
 }

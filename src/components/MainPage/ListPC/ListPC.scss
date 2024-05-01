@@ -4,9 +4,9 @@
   gap: 10px;
   box-sizing: border-box;
   overflow: auto;
-  max-height: 500px;
-  width: 500px;
+  max-height: 80vh;
   min-width: 300px;
+  width: 30%;
   border-radius: 10px;
   border: 2px grey dashed;
   padding: 10px;
@@ -23,6 +23,7 @@
     gap: 10px;
     flex-direction: column;
     align-items: center;
+
   }
 }
 .pc-list-box::-webkit-scrollbar {
@@ -30,6 +31,10 @@
 }
 .pc-list-box.all{
   background-color: #D0F9E4;
+
+  h3 {
+    background-color: #D0F9E4;
+  }
 }
 .pc-list-box.recommended {
   background-color: #60E080;

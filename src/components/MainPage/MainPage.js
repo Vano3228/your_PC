@@ -1,7 +1,6 @@
 import React from 'react'
 import './MainPage.scss'
 import ListPC from "./ListPC/ListPC";
-import ComponentItem from "../ComponentItem/ComponentItem";
 
 function MainPage() {
     return(
@@ -10,10 +9,6 @@ function MainPage() {
             <div className="content">
                 <ListPC type={'all'}/>
                 <ListPC type={'recommended'}/>
-                <ComponentItem type={"cpu"} component={{
-                    id: 2,
-                    name: 'AMD Ryzen 5 5500'
-                }}/>
             </div>
         </div>
     )

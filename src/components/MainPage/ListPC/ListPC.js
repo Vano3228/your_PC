@@ -28,8 +28,11 @@ function ListPC({type}) {
     }, [setList]);
     return(
         <div className={`pc-list-box ${type}`}>
-            <h3>{titles[type]}</h3>
+            <div className="title">
+                <h3>{titles[type]}</h3>
+            </div>
             <div className="pc-list">
+                {list && list.map((el, i)=><ItemPC el={el} key={i}/>)}
                 {list && list.map((el, i)=><ItemPC el={el} key={i}/>)}
             </div>
         </div>
