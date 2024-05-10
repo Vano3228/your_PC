@@ -4,8 +4,38 @@
   padding: 10px;
   box-sizing: border-box;
   border-radius: 5px;
-  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+
+  .price {
+    font-size: 22px;
+    border-top: 2px solid grey;
+    width: fit-content;
+    margin-top: 10px;
+    padding: 5px;
+  }
+
   h2 {
     white-space: normal !important;
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  button {
+    cursor: pointer;
+    font-size: 22px;
+    color: black;
+    width: 60%;
+    background-color: inherit;
+    border: 1px solid grey;
+    padding: 5px;
+    border-radius: 4px;
+    margin-top: 10px;
+    box-shadow: grey 1px 1px;
   }
 }

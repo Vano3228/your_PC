@@ -3,19 +3,32 @@
   flex-direction: column;
   gap: 10px;
   box-sizing: border-box;
-  overflow: auto;
   max-height: 80vh;
   min-width: 300px;
-  width: 30%;
+  width: 35%;
   border-radius: 10px;
   border: 2px grey dashed;
   padding: 10px;
 
-  h3 {
+  .title {
     font-size: 24px;
     text-align: center;
     border-bottom: 2px grey solid;
-    padding-bottom: 10px;
+    position: sticky;
+  }
+
+  .filter-box {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .scroll-box {
+    max-height: 70vh;
+    overflow: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   .pc-list {
@@ -23,21 +36,16 @@
     gap: 10px;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 
   }
 }
-.pc-list-box::-webkit-scrollbar {
-  width: 0;
-}
+
 .pc-list-box.all{
   background-color: #D0F9E4;
-
-  h3 {
-    background-color: #D0F9E4;
-  }
 }
 .pc-list-box.recommended {
-  background-color: #60E080;
+  background-color: #60E080C0;
 }
 .pc-list-box.user {
   background-color: azure;

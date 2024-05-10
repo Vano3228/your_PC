@@ -16,7 +16,7 @@ function ProfilePage() {
                     <p>Логин - {currentUser.login}</p>
                     <p>Роль - {currentUser.role}</p>
                 </div>
-                <ListPC type={'user'} userID={1}/>
+                <ListPC type={'user'}/>
             </div>
         )
     }

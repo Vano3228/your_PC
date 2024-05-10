@@ -8,9 +8,15 @@
     box-sizing: border-box;
     background-color: #D9C9BA;
 
-    a,
     .logo {
-        height: 100%;
+        height: 80px;
+        padding: 10px;
+        border-radius: 20px;
+        box-shadow: grey 2px 2px;
+        border: 1px solid grey;
+        cursor: pointer;
+        box-sizing: border-box;
+        background-color: #FDF0DF;
     }
 
     .buttons {

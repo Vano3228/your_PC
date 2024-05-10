@@ -46,8 +46,8 @@ const Modal = ({ isOpen, onClose, mode }) => {
             setAlreadyCreate(true)
         }
         else {
-            console.log(resp)
-            loginCurrentUser()
+            loginCurrentUser(resp.data)
+            alert('Вы успешно зарегистрировались!')
         }
     };
 

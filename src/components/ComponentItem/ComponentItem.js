@@ -26,7 +26,7 @@ function ComponentItem({component, type, onSelect}){
             setComponentWithPrices(newComponentWithPrices)
         }
         getPrices()
-    },[onSelect])
+    },[component, type])
     return(
         <div className="component-item"
              onClick={onSelect}

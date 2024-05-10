@@ -19,9 +19,10 @@ function App() {
     }, [currentUser]);
 
     const [selectPC, setSelectPC] = useState({});
+    const [createFormMode, setCreateFormMode] = useState('')
     return (
         <BrowserRouter>
-            <UserContext.Provider value={{currentUser, setCurrentUser, setSelectPC, selectPC}}>
+            <UserContext.Provider value={{currentUser, setCurrentUser, setSelectPC, selectPC, createFormMode, setCreateFormMode}}>
                 <div className="App">
                     <Header/>
                     <Routes>

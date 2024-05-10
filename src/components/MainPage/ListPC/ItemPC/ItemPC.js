@@ -1,44 +1,66 @@
 import './ItemPC.scss'
-import {useEffect, useState} from "react";
+import {useContext} from "react";
 import axios from "axios";
+import {NavLink} from "react-router-dom";
+import {UserContext} from "../../../../App";
 
-function ItemPC({el}) {
-    const [thisPC, setThisPC] = useState({});
-    const [dataLoaded, setDataLoaded] = useState(false);
+function ItemPC({el, onDelete}) {
+    const {setCreateFormMode, setSelectPC, currentUser} = useContext(UserContext)
     const pc_types ={
         home: 'Домашний',
-        work: 'Рабочий',
+        office: 'Офисный',
         game: 'Игровой'
     }
 
-    useEffect(()=>{
-        const getThisPC = async () => {
-            const src = `http://localhost:5000/api/computers/${el.id}`
-            const resp = await axios.get(src)
-            setThisPC(resp.data)
-            console.log(resp.data)
-            setDataLoaded(true)
-        }
-        getThisPC()
-    }, [])
+    const recommendHandler = async () => {
+        const src = `http://localhost:5000/api/computers/recommend/${el.pc_id}`
+        const resp = await axios.get(src)
+        alert(resp.data)
+    }
 
-    if (!dataLoaded) {
-        return <div>Loading...</div>;
+    const redirectHandler = () => {
+        const redirectPC = {...el}
+        setSelectPC(redirectPC)
+        if (currentUser && (currentUser.role === 'admin' || el.creator_id === currentUser.user_id)) {
+            setCreateFormMode('edit')
+        }
+        else {
+            setCreateFormMode('view')
+        }
     }
 
     return (
         <div className="item-pc">
-            <h1>Компьютер {thisPC.pc_id}</h1>
-            <h2>{thisPC.pc_name}</h2>
-            <h2>{thisPC.description}</h2>
-            <h2>Тип компьютера - {pc_types[thisPC.pc_type]}</h2>
-            <p>Процессор {thisPC.cpu.name}</p>
-            <p>Видеокарта {thisPC.gpu.name}</p>
-            <p>Материнская плата {thisPC.motherboard.name}</p>
-            <p>Блок питания {thisPC.power_supply.name}</p>
-            <p>Корпус {thisPC.pc_case.name}</p>
-            <p>Оперативная память {thisPC.ram.name}</p>
-            <p>Диск {thisPC.hard_drive.name}</p>
+            <h1>{el.title}</h1>
+            <h2>{el.description}</h2>
+            <h2>Тип компьютера - {pc_types[el.type]}</h2>
+            <p><b>Процессор</b> {el.cpu.name}</p>
+            <p><b>Видеокарта</b> {el.gpu.name}</p>
+            <p><b>Материнская плата</b> {el.motherboard.name}</p>
+            <p><b>Блок питания</b> {el.power_supply.name}</p>
+            <p><b>Корпус</b> {el.pc_case.name}</p>
+            <p><b>Оперативная память</b> {el.ram.name}</p>
+            <p><b>Накопитель</b> {el.hard_drive.name}</p>
+            <p className='price'><b>Цена - {el.pc_price} руб.</b></p>
+            <div className="buttons">
+                <NavLink to='/create'>
+                    <button type='button' onClick={redirectHandler}>
+                        Открыть в конфигураторе
+                    </button>
+                </NavLink>
+                {(currentUser && ((currentUser.role === 'admin') || (currentUser.user_id === el.creator_id))) &&
+                    <>
+                        {(!el.is_recommended && (currentUser.role === 'admin')) &&
+                            <button type='button' onClick={recommendHandler}>
+                            Рекомендовать сборку
+                        </button>
+                        }
+                        <button type='button' onClick={onDelete} style={{backgroundColor: 'rgba(255,200,191,0.75)'}}>
+                            Удалить конфигурацию
+                        </button>
+                    </>
+                }
+            </div>
         </div>
     )
 }

@@ -7,14 +7,17 @@ import {NavLink} from "react-router-dom";
 function Header() {
     const [registerModal, setRegisterModal] = useState(false)
     const [loginModal, setLoginModal] = useState(false)
-    const {currentUser, setCurrentUser} = useContext(UserContext)
+    const {currentUser, setCurrentUser, setSelectPC, setCreateFormMode} = useContext(UserContext)
     return(
         <header className="header">
             <NavLink to={"main"}>
                 <img src={logo} alt="logo Your PC" className="logo"/>
             </NavLink>
             <div className="buttons">
-                {currentUser && <NavLink to={'/create'}><button>Создай свой ПК!</button></NavLink>}
+                {currentUser && <NavLink to={'/create'}><button onClick={()=>{
+                    setSelectPC({})
+                    setCreateFormMode('create')
+                }}>Создай свой ПК!</button></NavLink>}
                 {currentUser && <NavLink to={'/profile'}><button> Профиль </button></NavLink>}
                 {!currentUser && <button onClick={(e)=>{
                     setLoginModal(true)}
@@ -23,11 +26,13 @@ function Header() {
                     setRegisterModal(true)
                 }
                 }>Регистрация</button>}
-                {currentUser && <button onClick={()=>{
-                    setCurrentUser(null)
-                    localStorage.removeItem('currentUser')
-                }
-                }>Выйти </button>}
+                {currentUser && <NavLink to={'/main'}>
+                    <button onClick={()=>{
+                        setCurrentUser(null)
+                        localStorage.removeItem('currentUser')
+                    }
+                    }>Выйти </button>
+                </NavLink>}
             </div>
             <Modal
                 isOpen={registerModal}
