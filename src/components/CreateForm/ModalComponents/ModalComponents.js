@@ -1,8 +1,8 @@
-
 import axios from "axios";
 import {useEffect, useState} from "react";
 import ComponentItem from "../../ComponentItem/ComponentItem";
-import './ModalComponents.scss'
+import './ModalComponents.scss';
+
 function ModalComponents({type, open, onClose, configPC, setConfigPC, handleComponentSelect}) {
     const componentName = {
         cpu: 'Выбор процессора',
@@ -13,9 +13,12 @@ function ModalComponents({type, open, onClose, configPC, setConfigPC, handleComp
         cooler: 'Выбор кулера',
         pc_case: 'Выбор корпуса',
         hard_drive: 'Выбор жёсткого диска'
-    }
-    const [fetchComponents, setFetchComponents] = useState([])
-    useEffect(() =>{
+    };
+
+    const [fetchComponents, setFetchComponents] = useState([]);
+    const [filter, setFilter] = useState('');
+
+    useEffect(() => {
         const getAllComponents = async () => {
             const compatibilityObj = {
                 cpu: (type === 'cpu') && {
@@ -56,40 +59,62 @@ function ModalComponents({type, open, onClose, configPC, setConfigPC, handleComp
                     motherboard_socket: configPC.hasOwnProperty('motherboard') && configPC.motherboard['socket'],
                     pc_case_cooler_max_height: configPC.hasOwnProperty('pc_case') && configPC.pc_case['cooler_max_height']
                 }
-            }
-            const src = `http://localhost:5000/api/components/all`
-            const compatibilityComponentsReq = await axios.post(src, {type, ...compatibilityObj[type]})
+            };
+            const src = `http://localhost:5000/api/components/all`;
+            const compatibilityComponentsReq = await axios.post(src, {type, ...compatibilityObj[type]});
             if (compatibilityComponentsReq.data !== []) {
-                setFetchComponents(compatibilityComponentsReq.data)
+                setFetchComponents(compatibilityComponentsReq.data);
             }
-        }
-        getAllComponents()
-    },[type, configPC])
-    return(
+        };
+        getAllComponents();
+    }, [type, configPC]);
+
+    const handleFilterChange = (e) => {
+        setFilter(e.target.value);
+    };
+
+    const filteredComponents = fetchComponents.filter(component =>
+        component.name.toLowerCase().includes(filter.toLowerCase())
+    );
+
+    return (
         <>
             {open &&
                 <div
                     className={`modal-components`}
-                    onClick={()=> onClose(false)}
+                    onClick={() => onClose(false)}
                 >
-                    <div className={`content`} onClick={(e)=> e.stopPropagation()}>
+                    <div className={`content`} onClick={(e) => e.stopPropagation()}>
                         <h2>
                             {componentName[type]}
                         </h2>
+                        <input
+                            type="text"
+                            value={filter}
+                            onChange={handleFilterChange}
+                            placeholder="Поиск по названию"
+                            className="filter-input"
+                        />
                         <div className='components'>
-                            {fetchComponents.map((el,i)=><ComponentItem key={i} type={type} component={el} onSelect={()=>handleComponentSelect(type, el)}/>)}
+                            {filteredComponents.length !== 0 ? filteredComponents.map((el, i) => (
+                                <ComponentItem key={i} type={type} component={el} onSelect={handleComponentSelect}/>
+                            )) :
+                            <p style={{textAlign: 'center'}}>Подходящих комплектующих не найдено</p>}
                         </div>
-                        {configPC.hasOwnProperty(type) && <button  className='clean-button' type='button' onClick={()=> {
-                            const deletedConfigPC = {...configPC}
-                            delete deletedConfigPC[type]
-                            setConfigPC(deletedConfigPC)
-                            onClose()
-                        }}> Очистить выбор </button>}
+                        {configPC.hasOwnProperty(type) && (
+                            <button className='clean-button' type='button' onClick={() => {
+                                const deletedConfigPC = {...configPC};
+                                deletedConfigPC.pc_price -= deletedConfigPC[type].price;
+                                delete deletedConfigPC[type];
+                                setConfigPC(deletedConfigPC);
+                                onClose();
+                            }}>Очистить выбор</button>
+                        )}
                     </div>
                 </div>
             }
         </>
-    )
+    );
 }
 
-export default ModalComponents
+export default ModalComponents;

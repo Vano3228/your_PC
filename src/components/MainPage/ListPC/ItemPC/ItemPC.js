@@ -41,6 +41,7 @@ function ItemPC({el, onDelete}) {
             <p><b>Корпус</b> {el.pc_case.name}</p>
             <p><b>Оперативная память</b> {el.ram.name}</p>
             <p><b>Накопитель</b> {el.hard_drive.name}</p>
+            <p><b>Дата создания конфигурации</b> {el.created_at.split('T').join(' ').slice(0,-5)}</p>
             <p className='price'><b>Цена - {el.pc_price} руб.</b></p>
             <div className="buttons">
                 <NavLink to='/create'>

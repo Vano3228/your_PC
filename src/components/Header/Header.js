@@ -14,25 +14,39 @@ function Header() {
                 <img src={logo} alt="logo Your PC" className="logo"/>
             </NavLink>
             <div className="buttons">
-                {currentUser && <NavLink to={'/create'}><button onClick={()=>{
+                {currentUser && <NavLink to={'/create'}>
+                    <button onClick={()=>{
                     setSelectPC({})
                     setCreateFormMode('create')
-                }}>Создай свой ПК!</button></NavLink>}
-                {currentUser && <NavLink to={'/profile'}><button> Профиль </button></NavLink>}
-                {!currentUser && <button onClick={(e)=>{
-                    setLoginModal(true)}
-                } >Вход</button>}
-                {!currentUser && <button onClick={(e)=>{
-                    setRegisterModal(true)
-                }
-                }>Регистрация</button>}
+                }}>
+                        Создай свой ПК!
+                    </button>
+                </NavLink>}
+                {currentUser && <NavLink to={'/guide'}>
+                    <button>
+                        Руководство по сборке
+                    </button>
+                </NavLink>}
+                {currentUser && <NavLink to={'/profile'}>
+                    <button>
+                        Профиль
+                    </button>
+                </NavLink>}
                 {currentUser && <NavLink to={'/main'}>
                     <button onClick={()=>{
                         setCurrentUser(null)
-                        localStorage.removeItem('currentUser')
-                    }
-                    }>Выйти </button>
+                        localStorage.removeItem('currentUser')}
+                    }>
+                        Выйти
+                    </button>
                 </NavLink>}
+                {!currentUser && <button onClick={()=>{
+                    setLoginModal(true)}
+                } >Вход</button>}
+                {!currentUser && <button onClick={()=>{
+                    setRegisterModal(true)
+                }
+                }>Регистрация</button>}
             </div>
             <Modal
                 isOpen={registerModal}

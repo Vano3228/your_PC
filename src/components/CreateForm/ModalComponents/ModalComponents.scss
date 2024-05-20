@@ -9,6 +9,23 @@
   justify-content: center;
   background-color: rgba(0,0,0,0.5);
 
+  .filter-input {
+    width: 100%;
+    height: 20px;
+    font-size: 18px;
+    min-height: 30px;
+    box-sizing: border-box;
+    text-align: center;
+    border-radius: 5px;
+    border: 1px solid grey;
+    padding: 2px;
+    outline: 0;
+
+    &:hover {
+      border-color: dimgrey;
+    }
+  }
+
   .content {
     box-sizing: border-box;
     background-color: white;
@@ -17,6 +34,7 @@
     border-radius: 12px;
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 20px;
     max-height: 90%;
 
@@ -39,6 +57,7 @@
 
   .components {
     overflow: auto;
+    width: 100%;
     display: flex;
     gap: 10px;
     flex-direction: column;

@@ -4,6 +4,7 @@ import Header from "./components/Header/Header";
 import MainPage from "./components/MainPage/MainPage";
 import CreateForm from "./components/CreateForm/CreateForm";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
+import GuidePage from "./components/GuidePage/GuidePage";
 import './App.css'
 
 export const UserContext = createContext(null);
@@ -19,7 +20,7 @@ function App() {
     }, [currentUser]);
 
     const [selectPC, setSelectPC] = useState({});
-    const [createFormMode, setCreateFormMode] = useState('')
+    const [createFormMode, setCreateFormMode] = useState('create')
     return (
         <BrowserRouter>
             <UserContext.Provider value={{currentUser, setCurrentUser, setSelectPC, selectPC, createFormMode, setCreateFormMode}}>
@@ -27,6 +28,7 @@ function App() {
                     <Header/>
                     <Routes>
                         <Route element={<CreateForm/>} path='create'/>
+                        <Route element={<GuidePage/>} path='guide'/>
                         <Route element={<ProfilePage />} path='profile'/>
                         <Route element={<MainPage />} path='*'/>
                     </Routes>

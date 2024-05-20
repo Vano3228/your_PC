@@ -7,13 +7,21 @@ import {UserContext} from "../../App";
 
 function CreateForm() {
     const {currentUser, selectPC, createFormMode, setCreateFormMode} = useContext(UserContext)
-    const [configPC, setConfigPC] = useState(selectPC);
+    const [configPC, setConfigPC] = useState(selectPC.hasOwnProperty("pc_price") ? selectPC : {pc_price: 0});
     const [modalOpen, setModalOpen] = useState(false)
     const [modalComponentType, setModalComponentType] = useState('')
     const [statusSubmit, setStatusSubmit] = useState()
-    const componentTypes = ['cpu', 'motherboard', 'ram', 'cooler', 'gpu', 'power_supply', 'hard_drive', 'pc_case']
+    const componentTypes = ['cpu', 'motherboard', 'ram', 'cooler', 'gpu', 'power_supply', 'hard_drive', 'pc_case'];
 
-
+    const checkFull = (pc) => {
+        const allFields = [...componentTypes, 'title', 'description', 'type'];
+        for (let i = 0; i < allFields.length; i++) {
+            if (!(pc.hasOwnProperty(allFields[i]))) {
+                return false;
+            }
+        }
+        return true;
+    }
     const logs = {
         success: () => <p style={{color: 'green', textAlign: 'center', fontSize: '18px'}}>Сборка успешно создана!</p>,
         update: () => <p style={{color: 'orange', textAlign: 'center', fontSize: '18px'}}>Сборка обновлена!</p>,
@@ -23,7 +31,8 @@ function CreateForm() {
     const handleComponentSelect = (type, component) => {
         const updatedPC = {
             ...configPC,
-            [type]: component
+            [type]: component,
+            pc_price: configPC.hasOwnProperty(type) ? configPC.pc_price - configPC[type].price + component.price : configPC.pc_price + component.price
         };
         setConfigPC(updatedPC);
         setModalOpen(false)
@@ -39,7 +48,7 @@ function CreateForm() {
 
     const handlerCleanForm = (e) => {
         e.preventDefault()
-        setConfigPC({})
+        setConfigPC({pc_price: 0})
         document.getElementsByName('type')[0].value = ''
         document.getElementsByName('title')[0].value = ''
         document.getElementsByName('description')[0].value = ''
@@ -48,8 +57,7 @@ function CreateForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if ((createFormMode === 'edit' && Object.keys(configPC).length < 14) ||
-        (createFormMode === 'create' && Object.keys(configPC).length < 11)) {
+        if (!checkFull(configPC)) {
             setStatusSubmit('not_complete')
             return null
         }
@@ -90,40 +98,50 @@ function CreateForm() {
                     handleComponentSelect={handleComponentSelect}
                 />
             }
-            <form onSubmit={handleSubmit}>
-                <label>
-                    <p>Название конфигурации:</p>
-                    <input name='title' type="text" onChange={handleComponentChange} value={configPC.title}/>
-                </label>
-                <label>
-                    <p>Описание конфигурации:</p>
-                    <input name='description' value={configPC.description} type="text" onChange={handleComponentChange}/>
-                </label>
-                <label>
-                    <p>Тип конфигунации:</p>
-                    <select name="type" value={configPC.type} onChange={handleComponentChange}>
-                        <option value="">Выберите тип сборки</option>
-                        <option value="game">Игровой</option>
-                        <option value="office">Офисный</option>
-                        <option value="home">Домашний</option>
-                    </select>
-                </label>
-                {componentTypes.map((el)=>
-                    <SelectComponent
-                        configPC={configPC}
-                        setModalComponentType={setModalComponentType}
-                        componentType={el}
-                        setModalOpen={setModalOpen}
-                    />)
-                }
-                {statusSubmit && logs[statusSubmit]()}
-                {(createFormMode === 'edit' || createFormMode === 'create') &&
-                    <div className="buttons">
-                        <button type="submit">{createFormMode === 'create' ? 'Создать' : 'Обновить'} сборку</button>
-                        {Object.keys(configPC).length !== 0 && <button type='button' onClick={handlerCleanForm}> Очистить форму</button>}
+            {createFormMode === 'view' && <h2>Режим просмотра</h2>}
+            {createFormMode === 'edit' && <h2>Режим редактирования</h2>}
+            {createFormMode === 'create' && <h2>Режим создания</h2>}
+            <div className="form">
+                <form onSubmit={handleSubmit}>
+                    <label>
+                        <p>Название конфигурации:</p>
+                        <input name='title' type="text" onChange={handleComponentChange} value={configPC.title}/>
+                    </label>
+                    <label>
+                        <p>Описание конфигурации:</p>
+                        <input name='description' value={configPC.description} type="text" onChange={handleComponentChange}/>
+                    </label>
+                    <label>
+                        <p>Тип конфигурации:</p>
+                        <select name="type" value={configPC.type} onChange={handleComponentChange}>
+                            <option value="">Выберите тип сборки</option>
+                            <option value="game">Игровой</option>
+                            <option value="office">Офисный</option>
+                            <option value="home">Домашний</option>
+                        </select>
+                    </label>
+                    {componentTypes.map((el)=>
+                        <SelectComponent
+                            configPC={configPC}
+                            setModalComponentType={setModalComponentType}
+                            componentType={el}
+                            setModalOpen={setModalOpen}
+                        />)
+                    }
+                    <div className='price-box'>
+                        <p>
+                            Цена конфигурации - <b>{configPC.pc_price}</b> ₽
+                        </p>
                     </div>
-                }
-            </form>
+                    {statusSubmit && logs[statusSubmit]()}
+                    {(createFormMode === 'edit' || createFormMode === 'create') &&
+                        <div className="buttons">
+                            <button type="submit">{createFormMode === 'create' ? 'Создать' : 'Обновить'} сборку</button>
+                            {Object.keys(configPC).length !== 1 && <button type='button' onClick={handlerCleanForm}> Очистить форму</button>}
+                        </div>
+                    }
+                </form>
+            </div>
         </div>
     );
 }

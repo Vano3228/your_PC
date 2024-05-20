@@ -12,11 +12,13 @@ function ProfilePage() {
         return (
             <div className="profile-page">
                 <h2>Профиль</h2>
-                <div className="user-info">
-                    <p>Логин - {currentUser.login}</p>
-                    <p>Роль - {currentUser.role}</p>
+                <div className="content">
+                    <div className="user-info">
+                        <p>Логин - {currentUser.login}</p>
+                        <p>Роль - {currentUser.role}</p>
+                    </div>
+                    <ListPC type={'user'}/>
                 </div>
-                <ListPC type={'user'}/>
             </div>
         )
     }

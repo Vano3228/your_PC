@@ -29,12 +29,12 @@ function ComponentItem({component, type, onSelect}){
     },[component, type])
     return(
         <div className="component-item"
-             onClick={onSelect}
+             onClick={()=>onSelect ? onSelect(type, componentWithPrices) : ''}
         >
             <h3>{componentWithPrices.name}</h3>
-            <p>Магазин {componentWithPrices.shop}</p>
             <p>{charFormatStrings[type]}</p>
-            <a href={componentWithPrices.url} target={'_blank'} rel="noreferrer">
+            <p>Магазин {componentWithPrices.shop}</p>
+            <a href={componentWithPrices.url} target={'_blank'} rel="noreferrer" onClick={(e)=>{e.stopPropagation()}}>
                 Ссылка на товар
             </a>
             <p className={'price'}><b>Цена - {componentWithPrices.price} руб</b></p>
